@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./signup.css";
 const SignUpForm  = () => {
     const [email,setEmail] = useState("");
@@ -15,8 +15,14 @@ const SignUpForm  = () => {
             phone: phone,
             password: password
         }; //Lưu thông tin user
-        console.log(newUser);
+       // console.log(newUser);
     };
+    useEffect(() => {
+        if (name.length < 4) {
+            console.log("name is too short");
+        }
+    }, [name])
+
     return (
        <section>
         <form className="infoform" onSubmit={handleSubmit}>
