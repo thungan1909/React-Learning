@@ -1,9 +1,11 @@
 import './App.css';
+import SignUpForm from './Component/SignUpForm';
 
 function App() {
   return (
     <div className="App">
-    Hello world
+    <header>Sign up</header>
+    <SignUpForm/>
     </div>
   );
 }
