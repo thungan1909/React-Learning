@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useFormik } from "formik";
 import "./signup.css";
 const SignUpForm  = () => {
     const [email,setEmail] = useState("");
@@ -7,31 +8,32 @@ const SignUpForm  = () => {
     const [password,setPassword] = useState("");
     const [confirmedPassword,setConfirmedPassword] = useState("");
 
-    const handleSubmit = (e) => {
-        e.preventDefault(); //Ngăn form re-load lại trang khi submit
-        const newUser = {
-            email: email,
-            name : name,
-            phone: phone,
-            password: password
-        }; //Lưu thông tin user
-       // console.log(newUser);
-    };
-    useEffect(() => {
-        if (name.length < 4) {
-            console.log("name is too short");
+    const formik = useFormik ({
+        initialValues:{
+            email: "",
+            name: "",
+            phone: "",
+            password: "",
+            confirmedPassword: ""
+
+        },
+        onSubmit: values => {
+            console.log(values);
         }
-    }, [name])
+    })
+   
 
     return (
        <section>
-        <form className="infoform" onSubmit={handleSubmit}>
+        <form className="infoform" onSubmit={formik.handleSubmit}>
             <label> Your name</label>
             <input 
              type="text"
              id="name" 
              name="name" 
-             onChange={(e) => setName(e.target.value)} //onChange khi nhập gì vào input thì nó sẽ bỏ những gì mình nhập vào name state
+             value={formik.values.name}
+            // onChange={(e) => setName(e.target.value)} //onChange khi nhập gì vào input thì nó sẽ bỏ những gì mình nhập vào name state
+             onChange={formik.handleChange}
              placeholder="Enter your name">
              </input>
 
@@ -40,7 +42,8 @@ const SignUpForm  = () => {
              type="email"
              id="email" 
              name="email" 
-             onChange={(e) => setEmail(e.target.value)}
+             value={formik.values.email}
+             onChange={formik.handleChange}
              placeholder="Enter your email">
              </input>
 
@@ -48,17 +51,19 @@ const SignUpForm  = () => {
             <input 
              type="text"
              id="password" 
-             name="pasword" 
-             onChange={(e) => setPassword(e.target.value)}
+             name="password" 
+             value={formik.values.password}
+             onChange={formik.handleChange}
              placeholder="Enter your password">
              </input>
 
              <label> Confirm Password</label>
             <input 
              type="text"
-             id="confirmedpassword" 
-             name="confirmedpasword" 
-             onChange={(e) => setConfirmedPassword(e.target.value)}
+             id="confirmedPassword" 
+             name="confirmedPassword" 
+             value={formik.values.confirmedPassword}
+             onChange={formik.handleChange}
              placeholder="Enter your password">
              </input>
 
@@ -67,7 +72,8 @@ const SignUpForm  = () => {
              type="text"
              id="phone" 
              name="phone" 
-             onChange={(e) => setPhone(e.target.value)}
+             value={formik.values.phone}
+             onChange={formik.handleChange}
              placeholder="Enter your phone number">
              </input>
             
